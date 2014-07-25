@@ -66,3 +66,8 @@ RECOVERY_FSTAB_VERSION := 2
 DEVICE_RESOLUTION := 1920x1200
 RECOVERY_TOUCHSCREEN_SWAP_XY := true
 RECOVERY_TOUCHSCREEN_FLIP_Y := true
+TW_NO_USB_STORAGE := true
+TW_EXTERNAL_STORAGE_PATH := "/external_sd"
+TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
+
+PRODUCT_COPY_FILES += device/bn/ovation/twrp.fstab:recovery/root/etc/twrp.fstab
