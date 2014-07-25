@@ -28,7 +28,9 @@
 #
 LOCAL_PATH := $(call my-dir)
 
+TWRP_RECOVERY := true
 OVATION_MASTER_KEY := device/bn/ovation/prebuilt/boot/master_boot.key
+RECOVERY_FLASHABLE_ZIP := device/bn/ovation/prebuilt/recovery/recovery.zip
 
 # this is a copy of the build/core/Makefile target
 # $(INSTALLED_BOOTIMAGE_TARGET) renamed to .sdcard
@@ -56,7 +58,25 @@ $(recovery_uboot_ramdisk): $(MKIMAGE) $(recovery_ramdisk)
 	$(MKIMAGE) $(INTERNAL_RECOVERYRAMDISKIMAGE_ARGS) $@
 	@echo ----- Made recovery uboot ramdisk -------- $@
 
-ifeq ($(BOARD_USES_UBOOT_MULTIIMAGE),true)
+ifeq ($(TWRP_RECOVERY),true)
+    # Create TWRP recovery image instead
+    INTERNAL_RECOVERY_IMAGE_ARGS := --pagesize 4096
+    INTERNAL_FLASHABLE_RECOVERY_NAME := $(OUT)/OVATION-TWRP-$(shell date -u +%Y%m%d)-recovery.zip
+
+    $(INSTALLED_RECOVERYIMAGE_TARGET).temp: $(MKBOOTIMG) $(recovery_ramdisk) $(recovery_kernel)
+	$(MKBOOTIMG) --kernel $(recovery_kernel) --ramdisk $(recovery_ramdisk) $(RECOVERY_IMAGE_ARGS) -o $@
+
+    $(INSTALLED_RECOVERYIMAGE_TARGET): $(INSTALLED_RECOVERYIMAGE_TARGET).temp $(OVATION_MASTER_KEY)
+	$(hide) cp $(OVATION_MASTER_KEY) $@
+	$(hide) dd if=$@.temp of=$@ bs=1048576 seek=1
+	$(hide) $(call assert-max-image-size,$@, \
+		$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
+	@echo ----- Made recovery image \(TWRP\) -------- $@
+	$(hide) cp $(RECOVERY_FLASHABLE_ZIP) $(INTERNAL_FLASHABLE_RECOVERY_NAME)
+	zip -u $(INTERNAL_FLASHABLE_RECOVERY_NAME) $@
+	@echo ----- Made flashable recovery image -------- $(INTERNAL_FLASHABLE_RECOVERY_NAME)
+
+else ifeq ($(BOARD_USES_UBOOT_MULTIIMAGE),true)
     $(warning We are here.)
     INTERNAL_RECOVERYIMAGE_IMAGENAME := CWM $(TARGET_DEVICE) Multiboot
     INTERNAL_RECOVERYIMAGE_ARGS := -A ARM -O Linux -T multi -C none -n "$(INTERNAL_RECOVERYIMAGE_IMAGENAME)"
