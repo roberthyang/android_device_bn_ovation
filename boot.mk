@@ -60,11 +60,11 @@ $(recovery_uboot_ramdisk): $(MKIMAGE) $(recovery_ramdisk)
 
 ifeq ($(TWRP_RECOVERY),true)
     # Create TWRP recovery image instead
-    INTERNAL_RECOVERY_IMAGE_ARGS := --pagesize 4096
+    INTERNAL_RECOVERY_IMAGE_ARGS := --base 0x80000000 --pagesize 4096 
     INTERNAL_FLASHABLE_RECOVERY_NAME := $(OUT)/OVATION-TWRP-$(shell date -u +%Y%m%d)-recovery.zip
 
     $(INSTALLED_RECOVERYIMAGE_TARGET).temp: $(MKBOOTIMG) $(recovery_ramdisk) $(recovery_kernel)
-	$(MKBOOTIMG) --kernel $(recovery_kernel) --ramdisk $(recovery_ramdisk) $(RECOVERY_IMAGE_ARGS) -o $@
+	$(MKBOOTIMG) --kernel $(recovery_kernel) --ramdisk $(recovery_ramdisk) $(INTERNAL_RECOVERY_IMAGE_ARGS) -o $@
 
     $(INSTALLED_RECOVERYIMAGE_TARGET): $(INSTALLED_RECOVERYIMAGE_TARGET).temp $(OVATION_MASTER_KEY)
 	$(hide) cp $(OVATION_MASTER_KEY) $@
@@ -73,7 +73,7 @@ ifeq ($(TWRP_RECOVERY),true)
 		$(BOARD_RECOVERYIMAGE_PARTITION_SIZE),raw)
 	@echo ----- Made recovery image \(TWRP\) -------- $@
 	$(hide) cp $(RECOVERY_FLASHABLE_ZIP) $(INTERNAL_FLASHABLE_RECOVERY_NAME)
-	zip -u $(INTERNAL_FLASHABLE_RECOVERY_NAME) $@
+	zip -quj $(INTERNAL_FLASHABLE_RECOVERY_NAME) $@
 	@echo ----- Made flashable recovery image -------- $(INTERNAL_FLASHABLE_RECOVERY_NAME)
 
 else ifeq ($(BOARD_USES_UBOOT_MULTIIMAGE),true)
