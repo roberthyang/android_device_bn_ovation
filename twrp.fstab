@@ -1,9 +1,9 @@
 # mount point fstype device
 
 /boot       emmc        /dev/block/mmcblk0p4
-/system     ext4        /dev/block/platform/omap/omap_hsmmc.1/by-name/system
-/data       ext4        /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata
-/cache      ext4        /dev/block/platform/omap/omap_hsmmc.1/by-name/cache
+/system     f2fs        /dev/block/platform/omap/omap_hsmmc.1/by-name/system
+/data       f2fs        /dev/block/platform/omap/omap_hsmmc.1/by-name/userdata
+/cache      f2fs        /dev/block/platform/omap/omap_hsmmc.1/by-name/cache
 /recovery   emmc        /dev/block/mmcblk0p3                                     flags=backup=1;display=Recovery
 /bootdata   vfat        /dev/block/mmcblk0p6
 /external_sd auto       /dev/block/mmcblk1p1                                     flags=display="SD Card";storage;wipeingui;removable

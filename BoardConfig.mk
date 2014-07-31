@@ -70,4 +70,6 @@ TW_NO_USB_STORAGE := true
 TW_EXTERNAL_STORAGE_PATH := "/external_sd"
 TW_EXTERNAL_STORAGE_MOUNT_POINT := "external_sd"
 
+TARGET_USERIMAGES_USE_F2FS := true
+
 PRODUCT_COPY_FILES += device/bn/ovation/twrp.fstab:recovery/root/etc/twrp.fstab
