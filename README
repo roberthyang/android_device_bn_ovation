@@ -1,3 +1,6 @@
+NOTE: this branch contains F2FS-related TWRP changes.  
+To build the regular (ext4-only) TWRP use the cm-11.0-twrp branch.
+
 To build recovery with TWRP instead of CWM on CM11, use this local manifest :
 
 <manifest>
@@ -9,7 +12,7 @@ To build recovery with TWRP instead of CWM on CM11, use this local manifest :
   <project path="bootable/recovery" name="android_bootable_recovery" remote="omni" revision="android-4.4"/>
 
   <remove-project name="CyanogenMod/android_device_bn_ovation" />
-  <project path="device/bn/ovation" name="android_device_bn_ovation" remote="rhy" revision="cm-11.0-twrp"/>
+  <project path="device/bn/ovation" name="android_device_bn_ovation" remote="rhy" revision="cm-11.0-twrp-f2fs"/>
 
 </manifest>
 
