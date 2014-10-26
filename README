@@ -1,11 +1,20 @@
+TODO: work in progress ... (note that SlimRoms has no official ovation builds yet)
+
 To build recovery with TWRP on Slimkat, use this local manifest :
 
 <manifest>
 
   <remote name="rhy" fetch="https://github.com/roberthyang" />
-  
-  <remove-project name="CyanogenMod/android_device_bn_ovation" />
+
+  <project path="hardware/libhardware" name="CyanogenMod/android_hardware_libhardware" groups="pdk" remote="github" revision="cm-11.0" />
+  <project path="hardware/ti/wlan" name="CyanogenMod/android_hardware_ti_wlan" remote="github" revision="cm-11.0"  />
+  <project path="hardware/ti/wpan" name="CyanogenMod/android_hardware_ti_wpan" remote="github" revision="cm-11.0"  />
+  <project path="external/wpa_supplicant_8_ti" name="CyanogenMod/android_external_wpa_supplicant_8_ti" remote="github" revision="cm-11.0" />
+  <project name="TheMuppets/proprietary_vendor_bn" path="vendor/bn" remote="github" revision="cm-11.0" />
+
+  <project path="device/bn/common" name="android_device_bn_common" remote="rhy" revision="kk4.4"/>
   <project path="device/bn/ovation" name="android_device_bn_ovation" remote="rhy" revision="kk4.4"/>
+  <project path="system/core" name="android_system_core" remote="rhy" revision="kk4.4" />
 
 </manifest>
 
