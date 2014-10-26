@@ -1,19 +1,15 @@
-To build recovery with TWRP instead of CWM on CM11, use this local manifest :
+To build recovery with TWRP on Slimkat, use this local manifest :
 
 <manifest>
 
-  <remote name="omni" fetch="https://github.com/omnirom" />
   <remote name="rhy" fetch="https://github.com/roberthyang" />
   
-  <remove-project name="CyanogenMod/android_bootable_recovery"/>
-  <project path="bootable/recovery" name="android_bootable_recovery" remote="omni" revision="android-4.4"/>
-
   <remove-project name="CyanogenMod/android_device_bn_ovation" />
-  <project path="device/bn/ovation" name="android_device_bn_ovation" remote="rhy" revision="cm-11.0-twrp"/>
+  <project path="device/bn/ovation" name="android_device_bn_ovation" remote="rhy" revision="kk4.4"/>
 
 </manifest>
 
-Resync your CM11 repo, then refer to the TWRP compiling guide :
+Resync your repo, then refer to the TWRP compiling guide :
 
 http://forum.xda-developers.com/showthread.php?p=32965365
 
